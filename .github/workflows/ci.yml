@@ -40,10 +40,14 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set IMAGE and SHA for user-service (lowercase owner)
+        run: |
+          OWNER="${{ github.repository_owner }}"
+          OWNER_LC=$(echo "$OWNER" | tr '[:upper:]' '[:lower:]')
+          echo "IMAGE=ghcr.io/$OWNER_LC/user-service" >> $GITHUB_ENV
+          echo "SHA=${{ github.sha }}" >> $GITHUB_ENV
+
       - name: Build & push user-service
-        env:
-          IMAGE: ghcr.io/${{ github.repository_owner }}/user-service
-          SHA: ${{ github.sha }}
         run: |
           docker build -t $IMAGE:latest -t $IMAGE:${SHA::7} services/user-service
           docker push $IMAGE:latest
@@ -62,9 +66,16 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set IMAGE and SHA for order-service (lowercase owner)
+        run: |
+          OWNER="${{ github.repository_owner }}"
+          OWNER_LC=$(echo "$OWNER" | tr '[:upper:]' '[:lower:]')
+          echo "IMAGE=ghcr.io/$OWNER_LC/order-service" >> $GITHUB_ENV
+          echo "SHA=${{ github.sha }}" >> $GITHUB_ENV
+
       - name: Build & push order-service
         env:
-          IMAGE: ghcr.io/${{ github.repository_owner }}/order-service
+          IMAGE: ghcr.io/${{ toLower(github.repository_owner) }}/order-service
           SHA: ${{ github.sha }}
         run: |
           docker build -t $IMAGE:latest -t $IMAGE:${SHA::7} services/order-service
