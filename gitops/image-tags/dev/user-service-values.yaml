@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/OWNER/user-service
-  tag: "be246d9"
+  tag: "cc6a5f9"
 env:
   - name: SECRET_KEY
     value: "dev-secret-user"
