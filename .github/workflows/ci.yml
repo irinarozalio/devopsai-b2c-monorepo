@@ -74,9 +74,6 @@ jobs:
           echo "SHA=${{ github.sha }}" >> $GITHUB_ENV
 
       - name: Build & push order-service
-        env:
-          IMAGE: ghcr.io/${{ toLower(github.repository_owner) }}/order-service
-          SHA: ${{ github.sha }}
         run: |
           docker build -t $IMAGE:latest -t $IMAGE:${SHA::7} services/order-service
           docker push $IMAGE:latest
