@@ -1,5 +1,5 @@
 image:
-  repository: ghcr.io/OWNER/user-service
+  repository: ghcr.io/baruchihalamish20/user-service
   tag: "latest"
 replicaCount: 1
 

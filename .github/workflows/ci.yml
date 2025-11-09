@@ -78,3 +78,43 @@ jobs:
           docker build -t $IMAGE:latest -t $IMAGE:${SHA::7} services/order-service
           docker push $IMAGE:latest
           docker push $IMAGE:${SHA::7}
+          
+  update-gitops-user-dev-tag:
+    name: Update GitOps tag for user-service (dev)
+    needs: [detect-changes, build-push-user]
+    # only when:
+    #  - user-service actually changed
+    #  - the event is a push to master (not PRs)
+    if: |
+      needs.detect-changes.outputs.user_changed == 'true' &&
+      github.event_name == 'push' &&
+      startsWith(github.ref, 'refs/heads/master')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true  # use GITHUB_TOKEN to push
+      - name: Configure git author
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Update tag in dev values (user-service)
+        env:
+          SHORT_SHA: ${{ github.sha }}
+        run: |
+          # ensure latest master
+          git checkout master
+          git pull --rebase origin master
+
+          # update the tag in the dev override file
+          sed -i "s/tag:.*/tag: \"${SHORT_SHA::7}\"/" gitops/image-tags/dev/user-service-values.yaml
+
+          # commit only if there are changes
+          if ! git diff --quiet; then
+            git add gitops/image-tags/dev/user-service-values.yaml
+            git commit -m "Update user-service image tag to ${SHORT_SHA::7} (dev)"
+            git push origin master
+          else
+            echo "No changes to commit."
+          fi

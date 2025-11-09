@@ -6,8 +6,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/YOUR_ORG/YOUR_REPO.git
-    targetRevision: main
+    repoURL: https://github.com/BaruchiHalamish20/devopsai-b2c-monorepo.git
+    targetRevision: master
     path: helm/user-service
     helm:
       valueFiles:

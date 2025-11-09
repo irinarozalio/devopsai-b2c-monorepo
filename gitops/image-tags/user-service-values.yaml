@@ -1,6 +1,6 @@
 image:
-  repository: ghcr.io/OWNER/user-service
+  repository: ghcr.io/BaruchiHalamish20/user-service
   tag: "latest"
 env:
   - name: SECRET_KEY
-    value: "prod-secret-user"
+    value: "stage-secret-user"

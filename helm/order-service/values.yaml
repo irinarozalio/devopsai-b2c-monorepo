@@ -1,5 +1,5 @@
 image:
-  repository: ghcr.io/OWNER/order-service
+  repository: ghcr.io/baruchihalamish20/order-service
   tag: "latest"
 replicaCount: 1
 
