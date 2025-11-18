@@ -5,7 +5,7 @@ replicaCount: 1
 
 service:
   # NodePort for Docker Desktop, LoadBalancer for cloud
-  type: NodePort
+  type: LoadBalancer
   port: 80
   nodePort: 30002
 
