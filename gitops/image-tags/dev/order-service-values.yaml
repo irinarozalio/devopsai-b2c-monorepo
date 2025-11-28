@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/irinarozalio/order-service
-  tag: "6035545"
+  tag: "a574686"
 env:
   - name: SECRET_KEY
     value: "dev-secret-order"
