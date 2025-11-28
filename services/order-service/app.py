@@ -109,6 +109,7 @@ def list_orders():
 
     # return only this user’s orders
     user_orders = [o for o in ORDERS if o["user"] == username]
+    print("Order service started (Ira)")
     return jsonify(user_orders)
 
 if __name__ == "__main__":
