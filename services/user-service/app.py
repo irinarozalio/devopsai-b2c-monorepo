@@ -105,7 +105,7 @@ def baruchi_login():
 
 @app.get("/niv-login")
 def niv_login():
-    return jsonify({"who is the king?": "Niv"})
+    return jsonify({"who is the king?": "Ira"})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
